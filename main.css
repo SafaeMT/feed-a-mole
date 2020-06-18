@@ -43,4 +43,14 @@ body {
     border-radius: 50%;
     margin-left: 55px;
     margin-right: 55px;
+    overflow: visible;
+    position: relative;
+}
+
+.molehill img {
+    position: absolute;
+    width: 120%;
+    height: auto;
+    top: 5px;
+    left: -13px;
 }
