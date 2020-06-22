@@ -5,24 +5,18 @@ gameAPI.start();
 // ********** DEFINITIONS **********
 function createGame() {
     // Configuration du jeu
-    let run = false;
-    let lastTFrame = 0;
+    let moles = [];
 
     const HUNGRY_TIMER = 3000;
     const LEAVING_TIMER = 500;
-    const HIDDEN_TIMER = 1000;
 
     return { start };
 
     function start() {
-        run = true;
-
-        document.querySelectorAll('.hungry').forEach(hungryMole => {
-            hungryMole.style.display = 'block';
-        });
-
-        document.querySelectorAll('.leaving').forEach(leavingMole => {
-            leavingMole.style.display = 'none';
+        moles = Array.from(document.querySelectorAll('.mole'));
+        moles.forEach(mole => {
+            mole.state = 'hidden';
+            mole.nextStateTFrame = 1000 + Math.round(Math.random() * 10000);
         });
 
         // Début du cycle du jeu
@@ -31,38 +25,38 @@ function createGame() {
 
     // ********** PRIVATE FUNCTIONS **********
     function handleNextFrame(tFrame) {
-        if (run) {
-            if (tFrame >= lastTFrame + HUNGRY_TIMER + LEAVING_TIMER + HIDDEN_TIMER) {
-                update();
-                lastTFrame = tFrame;
+        moles.forEach(mole => {
+            if (tFrame >= mole.nextStateTFrame) {
+                changeState(mole);
+                render(mole);
             }
+        });
 
-            requestAnimationFrame(handleNextFrame);
+        requestAnimationFrame(handleNextFrame);
+    }
+
+    function changeState(mole) {
+        if (mole.state == 'hidden') {
+            mole.state = 'hungry';
+            mole.nextStateTFrame += HUNGRY_TIMER;
+        } else if (mole.state == 'hungry') {
+            mole.state = 'leaving';
+            mole.nextStateTFrame += LEAVING_TIMER;
+        } else {
+            mole.state = 'hidden';
+            mole.nextStateTFrame += 2000 + Math.round(Math.random() * 5000);
         }
     }
 
-    function update() {
-        updateHungryMole();
-        updateLeavingMole();
-    }
-
-    function updateHungryMole() {
-        document.querySelectorAll('.hungry').forEach(hungryMole => {
-            hungryMole.style.display = 'none';
-
-            setTimeout(() => {
-                hungryMole.style.display = 'block';
-            }, LEAVING_TIMER + HIDDEN_TIMER);
-        });
-    }
-
-    function updateLeavingMole() {
-        document.querySelectorAll('.leaving').forEach(leavingMole => {
-            leavingMole.style.display = 'block';
-
-            setTimeout(() => {
-                leavingMole.style.display = 'none';
-            }, LEAVING_TIMER);
-        });
+    function render(mole) {
+        if (mole.state == 'hungry') {
+            mole.src = 'images/molehungry.png'
+            mole.display = 'block';
+        } else if (mole.state == 'leaving') {
+            mole.src = 'images/moleleaving.png'
+        } else {
+            mole.src = '';
+            mole.display = 'none';
+        }
     }
 }
