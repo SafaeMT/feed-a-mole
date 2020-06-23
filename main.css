@@ -47,10 +47,14 @@ body {
     position: relative;
 }
 
-.molehill img {
+.mole {
     position: absolute;
     width: 120%;
     height: auto;
     top: 5px;
     left: -13px;
+}
+
+.mole:hover {
+    cursor: url('images/cursorworm.png'), pointer;
 }
