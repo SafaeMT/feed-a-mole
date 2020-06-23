@@ -8,6 +8,7 @@ function createGame() {
     let moles = [];
 
     const HUNGRY_TIMER = 3000;
+    const FED_TIMER = 1000;
     const SAD_TIMER = 1000;
     const LEAVING_TIMER = 500;
 
@@ -18,6 +19,16 @@ function createGame() {
         moles.forEach(mole => {
             mole.state = 'hidden';
             mole.nextStateTFrame = 1000 + Math.round(Math.random() * 10000);
+        });
+
+        document.querySelector('.molehills').addEventListener('click', function (e) {
+            if (e.target.classList.contains('mole')) {
+                if (e.target.state == 'hungry') {
+                    e.target.state = 'fed';
+                    e.target.nextStateTFrame += FED_TIMER;
+                    render(e.target);
+                }
+            }
         });
 
         // Début du cycle du jeu
@@ -48,6 +59,7 @@ function createGame() {
                 mole.nextStateTFrame += SAD_TIMER;
                 break;
 
+            case 'fed':
             case 'sad':
                 mole.state = 'leaving';
                 mole.nextStateTFrame += LEAVING_TIMER;
@@ -70,6 +82,10 @@ function createGame() {
             case 'hungry':
                 mole.src = 'images/molehungry.png';
                 mole.display = 'block';
+                break;
+
+            case 'fed':
+                mole.src = 'images/molefed.png';
                 break;
 
             case 'sad':
