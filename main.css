@@ -1,0 +1,60 @@
+/* GLOBAL */
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    cursor: url('images/cursor.png') 50 45, pointer;
+}
+
+/* WRAPPER */
+.wrapper {
+    width: 960px;
+    height: 540px;
+    background-image: url('images/background.png');
+    margin: 50px auto;
+    position: relative;
+}
+
+/* MOLEHILLS */
+.molehills {
+    position: absolute;
+    margin-top: 45px;
+    margin-bottom: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.molehill {
+    display: inline-block;
+    background-color: #000000;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    margin-left: 55px;
+    margin-right: 55px;
+    overflow: visible;
+    position: relative;
+}
+
+.mole {
+    position: absolute;
+    width: 120%;
+    height: auto;
+    top: 5px;
+    left: -13px;
+}
+
+.mole:hover {
+    cursor: url('images/cursorworm.png') 50 45, pointer;
+}
