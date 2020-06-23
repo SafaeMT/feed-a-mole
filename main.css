@@ -10,7 +10,7 @@ html {
 body {
     margin: 0;
     padding: 0;
-    cursor: url('images/cursor.png'), pointer;
+    cursor: url('images/cursor.png') 50 45, pointer;
 }
 
 /* WRAPPER */
@@ -56,5 +56,5 @@ body {
 }
 
 .mole:hover {
-    cursor: url('images/cursorworm.png'), pointer;
+    cursor: url('images/cursorworm.png') 50 45, pointer;
 }
