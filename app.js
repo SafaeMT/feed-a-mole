@@ -8,6 +8,7 @@ function createGame() {
     let moles = [];
 
     const HUNGRY_TIMER = 3000;
+    const SAD_TIMER = 1000;
     const LEAVING_TIMER = 500;
 
     return { start };
@@ -36,27 +37,48 @@ function createGame() {
     }
 
     function changeState(mole) {
-        if (mole.state == 'hidden') {
-            mole.state = 'hungry';
-            mole.nextStateTFrame += HUNGRY_TIMER;
-        } else if (mole.state == 'hungry') {
-            mole.state = 'leaving';
-            mole.nextStateTFrame += LEAVING_TIMER;
-        } else {
-            mole.state = 'hidden';
-            mole.nextStateTFrame += 2000 + Math.round(Math.random() * 5000);
+        switch (mole.state) {
+            case 'hidden':
+                mole.state = 'hungry';
+                mole.nextStateTFrame += HUNGRY_TIMER;
+                break;
+
+            case 'hungry':
+                mole.state = 'sad';
+                mole.nextStateTFrame += SAD_TIMER;
+                break;
+
+            case 'sad':
+                mole.state = 'leaving';
+                mole.nextStateTFrame += LEAVING_TIMER;
+                break;
+
+            case 'leaving':
+                mole.state = 'hidden';
+                mole.nextStateTFrame += 2000 + Math.round(Math.random() * 5000);
+                break;
         }
     }
 
     function render(mole) {
-        if (mole.state == 'hungry') {
-            mole.src = 'images/molehungry.png'
-            mole.display = 'block';
-        } else if (mole.state == 'leaving') {
-            mole.src = 'images/moleleaving.png'
-        } else {
-            mole.src = '';
-            mole.display = 'none';
+        switch (mole.state) {
+            case 'hidden':
+                mole.src = '';
+                mole.display = 'none';
+                break;
+
+            case 'hungry':
+                mole.src = 'images/molehungry.png';
+                mole.display = 'block';
+                break;
+
+            case 'sad':
+                mole.src = 'images/molesad.png';
+                break;
+
+            case 'leaving':
+                mole.src = 'images/moleleaving.png';
+                break;
         }
     }
 }
