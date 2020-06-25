@@ -4,6 +4,8 @@ gameAPI.start();
 // ********** DEFINITIONS **********
 function createGame() {
     // Configuration du jeu
+    let isRunning = false;
+
     let moles = [];
     let score = 0;
     let scoreEl;
@@ -18,6 +20,7 @@ function createGame() {
     return { start };
 
     function start() {
+        isRunning = true;
         scoreEl = document.querySelector('.score');
 
         moles = Array.from(document.querySelectorAll('.mole'));
@@ -35,6 +38,10 @@ function createGame() {
 
                     renderMole(e.target);
                     renderScore();
+
+                    if (score == MAX_SCORE) {
+                        endGame();
+                    }
                 }
             }
         });
@@ -45,14 +52,16 @@ function createGame() {
 
     // ********** PRIVATE FUNCTIONS **********
     function handleNextFrame(tFrame) {
-        moles.forEach(mole => {
-            if (tFrame >= mole.nextStateTFrame) {
-                changeState(mole);
-                renderMole(mole);
-            }
-        });
+        if (isRunning) {
+            moles.forEach(mole => {
+                if (tFrame >= mole.nextStateTFrame) {
+                    changeState(mole);
+                    renderMole(mole);
+                }
+            });
 
-        requestAnimationFrame(handleNextFrame);
+            requestAnimationFrame(handleNextFrame);
+        }
     }
 
     function changeState(mole) {
@@ -108,5 +117,9 @@ function createGame() {
 
     function renderScore() {
         scoreEl.style.width = `${Math.min(100, 10 + (90 / MAX_SCORE) * score)}%`;
+    }
+
+    function endGame() {
+        isRunning = false;
     }
 }
