@@ -17,7 +17,10 @@ function createGame() {
     const SAD_TIMER = 1000;
     const LEAVING_TIMER = 500;
 
-    return { start };
+    return {
+        start,
+        reset
+    };
 
     function start() {
         isRunning = true;
@@ -44,6 +47,10 @@ function createGame() {
                     }
                 }
             }
+        });
+
+        document.querySelector('.reset').addEventListener('click', () => {
+            reset();
         });
 
         // Début du cycle du jeu
@@ -116,10 +123,32 @@ function createGame() {
     }
 
     function renderScore() {
-        scoreEl.style.width = `${Math.min(100, 10 + (90 / MAX_SCORE) * score)}%`;
+        scoreEl.style.width = `${Math.min(100, 10 + (90 / (MAX_SCORE - 1)) * score)}%`;
     }
 
     function endGame() {
         isRunning = false;
+
+        document.querySelector('.main-screen').classList.add('hidden');
+        document.querySelector('.end-screen').classList.remove('hidden');
+    }
+
+    function reset() {
+        score = 0;
+        moles.forEach(mole => {
+            mole.state = 'hidden';
+            mole.nextStateTFrame = performance.now() + 1000 + Math.round(Math.random() * 10000);
+        });
+
+        requestAnimationFrame(() => {
+            renderScore();
+            moles.forEach(renderMole);
+
+            document.querySelector('.end-screen').classList.add('hidden');
+            document.querySelector('.main-screen').classList.remove('hidden');
+        });
+
+        isRunning = true;
+        requestAnimationFrame(handleNextFrame);
     }
 }
