@@ -71,3 +71,38 @@ body {
 .mole:hover {
     cursor: url('images/cursorworm.png') 50 45, pointer;
 }
+
+/* END SCREEN */
+.end-screen {
+    background-color: #262626;
+    height: 540px;
+    width: 960px;
+    cursor: default;
+    position: relative;
+}
+
+.end-screen img {
+    margin: auto;
+    display: block;
+    max-height: 100%;
+}
+
+.btn {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 60px;
+    background-color: #8C3C1F;
+    color: #ffffff;
+    font-size: larger;
+    width: 140px;
+    height: 30px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
