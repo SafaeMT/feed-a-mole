@@ -22,17 +22,30 @@ body {
     position: relative;
 }
 
+/* SCORE */
+.score {
+    position: absolute;
+    height: 75.8px;
+    width: 5%;
+    top: 15px;
+    padding: 0 55px;
+    overflow: hidden;
+}
+
+.worm {
+    height: 100%;
+}
+
 /* MOLEHILLS */
 .molehills {
     position: absolute;
-    margin-top: 45px;
-    margin-bottom: 15px;
+    bottom: 0;
 }
 
 .row {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .molehill {

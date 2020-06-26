@@ -1,11 +1,16 @@
-// ********** EXECUTIVE CODE **********
 const gameAPI = createGame();
 gameAPI.start();
 
 // ********** DEFINITIONS **********
 function createGame() {
     // Configuration du jeu
+    let isRunning = false;
+
     let moles = [];
+    let score = 0;
+    let scoreEl;
+
+    const MAX_SCORE = 10;
 
     const HUNGRY_TIMER = 3000;
     const FED_TIMER = 1000;
@@ -15,6 +20,9 @@ function createGame() {
     return { start };
 
     function start() {
+        isRunning = true;
+        scoreEl = document.querySelector('.score');
+
         moles = Array.from(document.querySelectorAll('.mole'));
         moles.forEach(mole => {
             mole.state = 'hidden';
@@ -26,7 +34,14 @@ function createGame() {
                 if (e.target.state == 'hungry') {
                     e.target.state = 'fed';
                     e.target.nextStateTFrame += FED_TIMER;
-                    render(e.target);
+                    score++;
+
+                    renderMole(e.target);
+                    renderScore();
+
+                    if (score == MAX_SCORE) {
+                        endGame();
+                    }
                 }
             }
         });
@@ -37,14 +52,16 @@ function createGame() {
 
     // ********** PRIVATE FUNCTIONS **********
     function handleNextFrame(tFrame) {
-        moles.forEach(mole => {
-            if (tFrame >= mole.nextStateTFrame) {
-                changeState(mole);
-                render(mole);
-            }
-        });
+        if (isRunning) {
+            moles.forEach(mole => {
+                if (tFrame >= mole.nextStateTFrame) {
+                    changeState(mole);
+                    renderMole(mole);
+                }
+            });
 
-        requestAnimationFrame(handleNextFrame);
+            requestAnimationFrame(handleNextFrame);
+        }
     }
 
     function changeState(mole) {
@@ -72,7 +89,7 @@ function createGame() {
         }
     }
 
-    function render(mole) {
+    function renderMole(mole) {
         switch (mole.state) {
             case 'hidden':
                 mole.src = '';
@@ -96,5 +113,13 @@ function createGame() {
                 mole.src = 'images/moleleaving.png';
                 break;
         }
+    }
+
+    function renderScore() {
+        scoreEl.style.width = `${Math.min(100, 10 + (90 / MAX_SCORE) * score)}%`;
+    }
+
+    function endGame() {
+        isRunning = false;
     }
 }
