@@ -1,5 +1,8 @@
 const gameAPI = createGame();
-gameAPI.start();
+
+window.addEventListener('load', () => {
+    gameAPI.start();
+});
 
 // ********** DEFINITIONS **********
 function createGame() {
@@ -52,6 +55,9 @@ function createGame() {
         document.querySelector('.reset').addEventListener('click', () => {
             reset();
         });
+
+        document.querySelector('.loader-screen').classList.add('hidden');
+        document.querySelector('.main-screen').classList.remove('hidden');
 
         // Début du cycle du jeu
         requestAnimationFrame(handleNextFrame);
