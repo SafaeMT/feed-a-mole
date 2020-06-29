@@ -33,6 +33,7 @@ function createGame() {
         moles.forEach(mole => {
             mole.state = 'hidden';
             mole.nextStateTFrame = 1000 + Math.round(Math.random() * 10000);
+            mole.isKing = false;
         });
 
         document.querySelector('.molehills').addEventListener('click', function (e) {
@@ -68,12 +69,19 @@ function createGame() {
         if (isRunning) {
             moles.forEach(mole => {
                 if (tFrame >= mole.nextStateTFrame) {
+                    changeStatus(mole);
                     changeState(mole);
                     renderMole(mole);
                 }
             });
 
             requestAnimationFrame(handleNextFrame);
+        }
+    }
+
+    function changeStatus(mole) {
+        if (mole.state == 'hidden') {
+            mole.isKing = Math.random() < .1 ? true : false;
         }
     }
 
@@ -110,20 +118,20 @@ function createGame() {
                 break;
 
             case 'hungry':
-                mole.src = 'images/molehungry.png';
+                mole.src = mole.isKing ? 'images/kingmolehungry.png' : 'images/molehungry.png';
                 mole.display = 'block';
                 break;
 
             case 'fed':
-                mole.src = 'images/molefed.png';
+                mole.src = mole.isKing ? 'images/kingmolefed.png' : 'images/molefed.png';
                 break;
 
             case 'sad':
-                mole.src = 'images/molesad.png';
+                mole.src = mole.isKing ? 'images/kingmolesad.png' : 'images/molesad.png';
                 break;
 
             case 'leaving':
-                mole.src = 'images/moleleaving.png';
+                mole.src = mole.isKing ? 'images/kingmoleleaving.png' : 'images/moleleaving.png';
                 break;
         }
     }
