@@ -41,12 +41,17 @@ function createGame() {
                 if (e.target.state == 'hungry') {
                     e.target.state = 'fed';
                     e.target.nextStateTFrame += FED_TIMER;
-                    score++;
+
+                    if (e.target.isKing) {
+                        score += 2;
+                    } else {
+                        score++;
+                    }
 
                     renderMole(e.target);
                     renderScore();
 
-                    if (score == MAX_SCORE) {
+                    if (score >= MAX_SCORE) {
                         endGame();
                     }
                 }
