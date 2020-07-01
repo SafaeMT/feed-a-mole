@@ -7,6 +7,7 @@ window.addEventListener('load', () => {
 // ********** DEFINITIONS **********
 function createGame() {
     // Configuration du jeu
+    let lastTFrame;
     let isRunning = false;
 
     let moles = [];
@@ -26,13 +27,14 @@ function createGame() {
     };
 
     function start() {
+        lastTFrame = performance.now();
         isRunning = true;
         scoreEl = document.querySelector('.score');
 
         moles = Array.from(document.querySelectorAll('.mole'));
         moles.forEach(mole => {
             mole.state = 'hidden';
-            mole.nextStateTFrame = 1000 + Math.round(Math.random() * 10000);
+            mole.nextStateTFrame = lastTFrame + 1000 + Math.round(Math.random() * 10000);
             mole.isKing = false;
         });
 
@@ -40,7 +42,7 @@ function createGame() {
             if (e.target.classList.contains('mole')) {
                 if (e.target.state == 'hungry') {
                     e.target.state = 'fed';
-                    e.target.nextStateTFrame += FED_TIMER;
+                    e.target.nextStateTFrame = lastTFrame + FED_TIMER;
 
                     if (e.target.isKing) {
                         score += 2;
@@ -71,6 +73,8 @@ function createGame() {
 
     // ********** PRIVATE FUNCTIONS **********
     function handleNextFrame(tFrame) {
+        lastTFrame = tFrame;
+
         if (isRunning) {
             moles.forEach(mole => {
                 if (tFrame >= mole.nextStateTFrame) {
@@ -94,23 +98,23 @@ function createGame() {
         switch (mole.state) {
             case 'hidden':
                 mole.state = 'hungry';
-                mole.nextStateTFrame += HUNGRY_TIMER;
+                mole.nextStateTFrame = lastTFrame + HUNGRY_TIMER;
                 break;
 
             case 'hungry':
                 mole.state = 'sad';
-                mole.nextStateTFrame += SAD_TIMER;
+                mole.nextStateTFrame = lastTFrame + SAD_TIMER;
                 break;
 
             case 'fed':
             case 'sad':
                 mole.state = 'leaving';
-                mole.nextStateTFrame += LEAVING_TIMER;
+                mole.nextStateTFrame = lastTFrame + LEAVING_TIMER;
                 break;
 
             case 'leaving':
                 mole.state = 'hidden';
-                mole.nextStateTFrame += 2000 + Math.round(Math.random() * 5000);
+                mole.nextStateTFrame = lastTFrame + 2000 + Math.round(Math.random() * 5000);
                 break;
         }
     }
@@ -153,10 +157,12 @@ function createGame() {
     }
 
     function reset() {
+        lastTFrame = performance.now();
+
         score = 0;
         moles.forEach(mole => {
             mole.state = 'hidden';
-            mole.nextStateTFrame = performance.now() + 1000 + Math.round(Math.random() * 10000);
+            mole.nextStateTFrame = lastTFrame + 1000 + Math.round(Math.random() * 10000);
         });
 
         requestAnimationFrame(() => {
@@ -165,9 +171,9 @@ function createGame() {
 
             document.querySelector('.end-screen').classList.add('hidden');
             document.querySelector('.main-screen').classList.remove('hidden');
-        });
 
-        isRunning = true;
-        requestAnimationFrame(handleNextFrame);
+            isRunning = true;
+            requestAnimationFrame(handleNextFrame);
+        });
     }
 }
