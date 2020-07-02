@@ -127,20 +127,20 @@ function createGame() {
                 break;
 
             case 'hungry':
-                mole.src = mole.isKing ? 'images/kingmolehungry.png' : 'images/molehungry.png';
+                mole.src = mole.isKing ? '../public/images/kingmolehungry.png' : '../public/images/molehungry.png';
                 mole.display = 'block';
                 break;
 
             case 'fed':
-                mole.src = mole.isKing ? 'images/kingmolefed.png' : 'images/molefed.png';
+                mole.src = mole.isKing ? '../public/images/kingmolefed.png' : '../public/images/molefed.png';
                 break;
 
             case 'sad':
-                mole.src = mole.isKing ? 'images/kingmolesad.png' : 'images/molesad.png';
+                mole.src = mole.isKing ? '../public/images/kingmolesad.png' : '../public/images/molesad.png';
                 break;
 
             case 'leaving':
-                mole.src = mole.isKing ? 'images/kingmoleleaving.png' : 'images/moleleaving.png';
+                mole.src = mole.isKing ? '../public/images/kingmoleleaving.png' : '../public/images/moleleaving.png';
                 break;
         }
     }
