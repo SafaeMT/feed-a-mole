@@ -20,6 +20,9 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 
+# parcel cache
+.cache
+
 # dotenv environment variables file(s)
 .env
 .env.*
