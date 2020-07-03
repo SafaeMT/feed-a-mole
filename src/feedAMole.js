@@ -123,12 +123,12 @@ function renderMole(mole) {
   switch (mole.state) {
     case "hidden":
       mole.src = "";
-      mole.display = "none";
+      mole.classList.add("hidden");
       break;
 
     case "hungry":
       mole.src = mole.isKing ? kingMoleHungry : moleHungry;
-      mole.display = "block";
+      mole.classList.remove("hidden");
       break;
 
     case "fed":
