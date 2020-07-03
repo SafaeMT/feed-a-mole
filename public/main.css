@@ -71,7 +71,7 @@ body {
   left: -13px;
 }
 
-.mole:hover {
+.hungry:hover {
   cursor: url("images/cursorworm.png") 50 45, pointer;
 }
 
