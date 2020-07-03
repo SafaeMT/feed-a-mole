@@ -1,0 +1,31 @@
+{
+  "name": "feed-a-mole",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build public/index.html",
+    "dev": "parcel serve public/index.html",
+    "format": "prettier --write \"{public,src}/**/*.{html,js}\"",
+    "lint": "eslint \"src/**/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SafaeMT/feed-a-mole.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SafaeMT/feed-a-mole/issues"
+  },
+  "homepage": "https://github.com/SafaeMT/feed-a-mole#readme",
+  "devDependencies": {
+    "eslint": "^7.3.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.0.5"
+  }
+}
