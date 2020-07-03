@@ -129,14 +129,17 @@ function renderMole(mole) {
     case "hungry":
       mole.src = mole.isKing ? kingMoleHungry : moleHungry;
       mole.classList.remove("hidden");
+      mole.classList.add("hungry");
       break;
 
     case "fed":
       mole.src = mole.isKing ? kingMoleFed : moleFed;
+      mole.classList.remove("hungry");
       break;
 
     case "sad":
       mole.src = mole.isKing ? kingMoleSad : moleSad;
+      mole.classList.remove("hungry");
       break;
 
     case "leaving":
